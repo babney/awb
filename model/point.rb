@@ -36,7 +36,7 @@ class Point
 
 			if @value[idx] then
 				raise "no backsies!"
-			elsif answer.length != pt.question.arity then
+			elsif answer.length != @point.question.arity then
 				raise "wrong number of answers"
 			else
 				@value[idx] = answer

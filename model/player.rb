@@ -16,6 +16,10 @@ class Player
 		@game.current_point.answer[@id] = [@hand[anid]]
 		@hand.slice!(anid)
 	end
+	
+	def is_card_czar?
+	  @id == game.current_point.card_czar
+  end
 
 	attr_accessor :name, :hand
 	attr_reader :game
