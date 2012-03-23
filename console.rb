@@ -13,6 +13,7 @@ players = %w{foo bar baz qux}.map{|name| Player.new(name)}
 player_ids = players.map{|p| p.join($g)}
 $g.next_point!
 players.each do |p|
-  # TODO check arity
-  p.answer(rand(9)) unless p.is_card_czar?
+  $g.current_point.question.arity.times do
+    p.answer[0] unless p.is_card_czar?
+  end
 end
