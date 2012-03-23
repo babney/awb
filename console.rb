@@ -14,6 +14,6 @@ player_ids = players.map{|p| p.join($g)}
 $g.next_point!
 players.each do |p|
   $g.current_point.question.arity.times do
-    p.answer[0] unless p.is_card_czar?
+    p.answer 0 unless p.is_card_czar?
   end
 end
