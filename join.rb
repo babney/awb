@@ -1,16 +1,49 @@
+require 'json'
+require 'securerandom'
+
 require 'model/player'
 
-get '/join/:name' do
-	$g or return 403             # die if no game is running
+def login(name)
+	Player.new(name)
+end
+
+def join(player, game)
+	player.join(game)
+end
+
+# terrible homebrew player database, to be replaced with something better later
+$players = {}
+
+def new_plid
+	SecureRandom.uuid
+end
+
+get '/login/:name' do
 	params[:name] or return 400  # die if no player name was specified
 
-	player = Player.new(params[:name])
-
 	begin
-		id = player.join($g)
+		player = login(params[:name])
 	rescue
 		return 403
 	end
 
-	"welcome to the game, #{params[:name]}!  you're player #{id}."
+	plid = new_plid
+	$players[plid] = player
+
+	result = {:plid => plid}
+	JSON.dump(result)
+end
+
+get '/join/:plid' do
+	params[:plid] or return 400
+
+	$g or return 403
+	
+	player = $players[params[:plid]]
+	player or return 403
+
+	id = join(player, $g)
+
+	result = {:local_id => id}
+	JSON.dump(result)
 end

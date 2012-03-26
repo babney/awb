@@ -41,5 +41,3 @@ class GameSet
 
 	attr_reader :questions, :answers
 end
-
-GameSet::load("../assets/test.yaml")
